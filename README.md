@@ -41,6 +41,19 @@ Great for brushing up on the essentials and staying ahead in the course! 💪
 
 ---
 
+## 🎥 YouTube Playlist: Complementary Recordings  
+Although these recordings don’t cover the entire course, they offer **clear and concise explanations of key concepts**.  
+🖥️ **Watch the playlist here:** [Principles of Accounting YouTube Playlist](https://www.youtube.com/playlist?list=PLdQWatGxaBrPpVximY9xuZSSRWFdzcl7Y)  
+
+💡 **Highlights:**  
+- Short and engaging videos 🎬  
+- Simplifies complex topics into easy-to-digest explanations 💡  
+- A great way to reinforce your understanding alongside the course materials!  
+
+**Important:** These recordings are from previous years, and the specific files referenced in the videos are not included in this repository. However, students often find them valuable for review. 📚✨  
+
+---
+
 ## 🤔 How to Use This Repository:
 1. **Download Files:**  
    - Click the file name or **View raw** to download.  
@@ -53,6 +66,9 @@ Great for brushing up on the essentials and staying ahead in the course! 💪
 3. **Stay Updated:**  
    - Check back regularly for updates and additional materials.  
 
+4. **Watch Videos:**  
+   - Use the YouTube playlist as a quick refresher on main concepts or for alternative explanations.  
+
 ---
 
 ## 💌 Acknowledgments:
@@ -64,6 +80,7 @@ This repository is curated by **Dr. Shay Tsaban**.
 ## 🎉 Final Notes:
 - 🕵️ Explore each file for maximum benefit.  
 - 📆 Stay engaged and review materials regularly for the best results.  
+- 🎥 Make use of the YouTube playlist for extra learning support.  
 - 🍀 Good luck, and may your accounting journey be as smooth as a perfectly balanced ledger! 😄  
 
 ---
@@ -72,6 +89,7 @@ This repository is curated by **Dr. Shay Tsaban**.
 - 📄 [Coursebook 10280 - 2025 A.xlsx](./Coursebook%2010280%20-%202025%20A.xlsx)  
 - 📄 [Lecture 12 - Appendix Direct Method.docx](./Lecture%2012%20-%202025A%20-%20Appendix%20Direct%20Method.docx)  
 - 📄 [Lecture 3 - Theory Completion.docx](./Lecture%203%20-%202025A%20-%20Theory%20Completion.docx)  
+- 🎥 [YouTube Playlist - Principles of Accounting](https://www.youtube.com/playlist?list=PLdQWatGxaBrPpVximY9xuZSSRWFdzcl7Y)  
 
 ---
 
