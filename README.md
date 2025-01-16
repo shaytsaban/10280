@@ -1,38 +1,78 @@
-# 10280 - Principles of Accounting
+# 📘 10280 - Principles of Accounting 📘
 
-## Repository Overview
-This repository is dedicated to the course **10280 - Principles of Accounting**, providing students with the primary resource to excel in their studies. It includes the comprehensive coursebook and is maintained for easy access and updates.
+Welcome to the official repository for **10280 - Principles of Accounting**! 🎓 This repository is your one-stop shop for all the resources you need to succeed in the course. With materials crafted by the amazing **Dr. Shay Tsaban**, you're in excellent hands! ✨
 
 ---
 
-## Course Materials
-### Coursebook
+## 🗂️ Repository Overview:
+Here's what you'll find in this repository:  
+
+| File Name                               | Description                                                                                                                                              |
+|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **📄 Coursebook 10280 - 2025 A.xlsx**  | The core course material with lecture notes, exercises, and advanced accounting concepts.                                                                |
+| **📄 Lecture 12 - Appendix Direct Method.docx** | A handy guide to the **cash flow statement (direct method)**—useful for solving the **last question in Assignment 16**.                                      |
+| **📄 Lecture 3 - Theory Completion.docx**   | A summary of the **main accounting principles**—perfect for mastering the basics without being overwhelmed.                                               |
+
+---
+
+## 📚 Course Materials:
+### 1️⃣ **Coursebook 10280 - 2025 A.xlsx**  
+This file is your ultimate guide, packed with:  
+- 📝 **Lecture notes and summaries**  
+- 💡 **Practical exercises and examples**  
+- 📊 **Key concepts and advanced topics in financial accounting**  
+- 🌟 **Additional resources** to supercharge your learning  
+
+💡 **Note:** All materials presented in Zoom meetings are included unless otherwise specified.  
+
+---
+
+### 2️⃣ **Lecture 12 - Appendix Direct Method.docx**  
+📄 **What’s Inside?**  
+A focused guide on the **cash flow statement using the direct method**.  
+This document directly applies to the **last question in Assignment 16**, so make sure to review it carefully! 🧾✅  
+
+---
+
+### 3️⃣ **Lecture 3 - Theory Completion.docx**  
+📄 **What’s Inside?**  
+A concise summary of the **main accounting principles** to help you build a solid foundation. 🏗️  
+Great for brushing up on the essentials and staying ahead in the course! 💪  
+
+---
+
+## 🤔 How to Use This Repository:
+1. **Download Files:**  
+   - Click the file name or **View raw** to download.  
+   - Alternatively, use the ⬇️ **down arrow** for a quick download.  
+
+2. **Follow Along:**  
+   - Use the coursebook to complement lectures, complete assignments, and prepare for exams.  
+   - Refer to **Lecture 12** for Assignment 16 and **Lecture 3** for accounting principles.  
+
+3. **Stay Updated:**  
+   - Check back regularly for updates and additional materials.  
+
+---
+
+## 💌 Acknowledgments:
+This repository is curated by **Dr. Shay Tsaban**.  
+📧 For questions or assistance, feel free to reach out at [shay.tsaban@gmail.com](mailto:shay.tsaban@gmail.com).  
+
+---
+
+## 🎉 Final Notes:
+- 🕵️ Explore each file for maximum benefit.  
+- 📆 Stay engaged and review materials regularly for the best results.  
+- 🍀 Good luck, and may your accounting journey be as smooth as a perfectly balanced ledger! 😄  
+
+---
+
+### 🌟 Quick Links:
 - 📄 [Coursebook 10280 - 2025 A.xlsx](./Coursebook%2010280%20-%202025%20A.xlsx)  
-  This file serves as the **core resource** for the course. It contains:
-  - Lecture notes and summaries
-  - Practical exercises and examples
-  - Key concepts and advanced topics in financial accounting
-  - Additional resources to complement your learning
-
-All materials that are presented in the zoom meetings are included in this file unless otherwise specified.
+- 📄 [Lecture 12 - Appendix Direct Method.docx](./Lecture%2012%20-%202025A%20-%20Appendix%20Direct%20Method.docx)  
+- 📄 [Lecture 3 - Theory Completion.docx](./Lecture%203%20-%202025A%20-%20Theory%20Completion.docx)  
 
 ---
 
-## How to Use This Repository
-1. **Access the Coursebook**: Click the link above to download the full coursebook.
-2. **Stay Updated**: Check the repository periodically for any updates or additional materials.
-
----
-
-## Acknowledgments
-This repository is curated by **Dr. Shay Tsaban** to support students in their journey through **Principles of Accounting**.  
-
-For any questions or assistance, please feel free to reach out through the repository's issues section.
-
----
-
-### Notes
-- Use the coursebook to follow along with lectures, complete assignments, and prepare for exams.
-- Regularly review the materials and stay engaged for the best learning experience.
-
-Good luck with the course! 🎓
+🎓 *Accounting is the language of business—master it and you're ready to rule the financial world!* 💼📈
