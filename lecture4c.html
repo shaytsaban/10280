@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שאלה – מכירת רכוש קבוע עם שינוי אומדן</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F8F9FC;--card:#FFF;--accent:#1A6B5C;--accent-light:#E6F4F0;--accent-border:#A8D5CA;--gold:#A67C00;--gold-light:#FFF8E1;--gold-border:#E0C97A;--coral:#B93A2E;--coral-light:#FDF0EE;--blue:#2C5F8A;--blue-light:#EBF3FA;--blue-border:#A3C4E0;--text:#1D2939;--text2:#3E5060;--text3:#7C8EA0;--border:#D4DAE3;--shadow:0 2px 10px rgba(0,0,0,0.05);--shadow-md:0 4px 18px rgba(0,0,0,0.07);--r:14px;--rs:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:2;font-size:17px;}
+.page{max-width:840px;margin:0 auto;padding:40px 28px 80px;}
+.header{text-align:center;padding:48px 24px 36px;background:linear-gradient(170deg,#fff 0%,#EDF2F7 60%,#E0ECF5 100%);border-bottom:1px solid var(--border);margin-bottom:36px;}
+.badge{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:13.5px;font-weight:600;padding:6px 18px;border-radius:50px;border:1px solid var(--accent-border);margin-bottom:14px;}
+.header h1{font-family:'Rubik',sans-serif;font-size:26px;font-weight:700;margin-bottom:6px;}
+.header h1 span{color:var(--accent);}
+.header p{font-size:16px;color:var(--text3);}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:30px 32px;margin-bottom:20px;box-shadow:var(--shadow);}
+.card:hover{box-shadow:var(--shadow-md);}
+.card h2{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;text-align:center;margin-bottom:16px;}
+.card h3{font-family:'Rubik',sans-serif;font-size:17px;font-weight:600;color:var(--accent);text-align:center;margin:20px 0 10px;}
+.card p{font-size:16.5px;color:var(--text2);line-height:2;}
+
+.q-box{background:var(--blue-light);border:1px solid var(--blue-border);border-radius:var(--r);padding:28px 30px;margin-bottom:22px;box-shadow:var(--shadow);}
+.q-box h2{font-family:'Rubik',sans-serif;font-size:19px;font-weight:700;color:var(--blue);text-align:center;margin-bottom:10px;}
+.q-box p{font-size:16.5px;color:var(--text);line-height:2;}
+.q-required{text-align:center;font-size:18px;font-weight:700;color:var(--blue);margin-top:16px;}
+
+.options{margin-top:22px;}
+.opt{display:flex;align-items:center;gap:14px;padding:14px 20px;margin-bottom:10px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--rs);cursor:pointer;transition:all 0.2s;font-size:17px;color:var(--text2);}
+.opt:hover{background:#F0F4F8;border-color:var(--text3);}
+.opt .letter{width:32px;height:32px;background:var(--bg);border:2px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Rubik',sans-serif;font-size:15px;font-weight:600;color:var(--text3);flex-shrink:0;}
+.opt .num{font-family:'Rubik',sans-serif;font-weight:600;}
+.opt.selected{background:var(--accent-light);border-color:var(--accent);color:var(--text);}
+.opt.selected .letter{background:var(--accent);border-color:var(--accent);color:#fff;}
+.opt.correct{background:var(--accent-light);border-color:var(--accent);}
+.opt.correct .letter{background:var(--accent);border-color:var(--accent);color:#fff;}
+.opt.wrong{background:var(--coral-light);border-color:var(--coral);}
+.opt.wrong .letter{background:var(--coral);border-color:var(--coral);color:#fff;}
+
+.btn-row{text-align:center;margin:20px 0;}
+.check-btn{background:var(--accent);color:#fff;font-family:'Heebo',sans-serif;font-size:16px;font-weight:700;padding:13px 36px;border:none;border-radius:10px;cursor:pointer;transition:all 0.2s;}
+.check-btn:hover{box-shadow:0 4px 16px rgba(26,107,92,0.25);transform:translateY(-1px);}
+.check-btn:disabled{background:var(--bg);color:var(--text3);cursor:default;box-shadow:none;transform:none;border:1px solid var(--border);}
+.toggle-btn{display:block;margin:20px auto;background:var(--card);color:var(--accent);font-family:'Heebo',sans-serif;font-size:16px;font-weight:600;padding:13px 32px;border:2px solid var(--accent-border);border-radius:10px;cursor:pointer;}
+.toggle-btn:hover{background:var(--accent-light);border-color:var(--accent);}
+
+.feedback{display:none;margin-top:16px;padding:16px 22px;border-radius:var(--rs);font-size:16px;line-height:1.9;}
+.feedback.show{display:block;}
+.feedback.correct-fb{background:var(--accent-light);color:var(--accent);border-right:4px solid var(--accent);}
+.feedback.wrong-fb{background:var(--coral-light);color:var(--coral);border-right:4px solid var(--coral);}
+
+.solution-wrapper{display:none;}
+.solution-wrapper.show{display:block;animation:fadeUp 0.4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px 30px;margin-bottom:18px;box-shadow:var(--shadow);}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;justify-content:center;}
+.step-num{width:36px;height:36px;background:var(--accent);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Rubik',sans-serif;font-size:16px;font-weight:700;flex-shrink:0;}
+.step-title{font-family:'Rubik',sans-serif;font-size:18px;font-weight:600;color:var(--text);}
+
+.f{background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);padding:16px 22px;margin:12px 0;text-align:center;font-family:'Rubik',sans-serif;font-size:18px;font-weight:600;color:var(--accent);direction:ltr;unicode-bidi:bidi-override;}
+.f .l{display:block;font-size:13.5px;font-weight:400;color:var(--text3);margin-top:5px;direction:rtl;unicode-bidi:bidi-override;}
+
+.kp{background:var(--accent-light);border-right:4px solid var(--accent);border-radius:0 var(--rs) var(--rs) 0;padding:14px 20px;margin:14px 0;}
+.kp .kl{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:1px;margin-bottom:3px;}
+.kp p{font-size:15px;color:var(--text);line-height:1.85;}
+
+.tip{background:var(--gold-light);border-right:4px solid var(--gold);border-radius:0 var(--rs) var(--rs) 0;padding:14px 20px;margin:14px 0;}
+.tip .kl{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;margin-bottom:3px;}
+.tip p{font-size:15px;color:var(--text);line-height:1.85;}
+
+.warn{background:var(--coral-light);border-right:4px solid var(--coral);border-radius:0 var(--rs) var(--rs) 0;padding:14px 20px;margin:14px 0;}
+.warn .kl{font-size:12px;font-weight:700;color:var(--coral);letter-spacing:1px;margin-bottom:3px;}
+.warn p{font-size:15px;color:var(--text);line-height:1.85;}
+
+.tw{overflow-x:auto;margin:14px 0;border-radius:var(--rs);border:1px solid var(--border);box-shadow:var(--shadow);}
+table{width:100%;border-collapse:collapse;font-size:15px;}
+thead th{background:var(--bg);color:var(--accent);font-weight:600;padding:11px 14px;text-align:right;font-size:14px;}
+tbody td{padding:10px 14px;border-top:1px solid var(--border);color:var(--text2);}
+tbody tr:hover{background:#FAFBFD;}
+.nc{text-align:center;font-family:'Rubik',sans-serif;font-weight:500;direction:ltr;}
+.total-row{font-weight:700;color:var(--accent)!important;background:var(--accent-light);}
+
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:30px 0;}
+.final{text-align:center;background:var(--accent-light);border:2px solid var(--accent-border);border-radius:var(--r);padding:24px;margin:20px 0;}
+.final .big{font-family:'Rubik',sans-serif;font-size:32px;font-weight:700;color:var(--accent);direction:ltr;}
+.final .fl{font-size:15px;color:var(--text2);margin-top:4px;}
+
+.timeline{display:flex;align-items:center;justify-content:center;gap:0;margin:20px 0;flex-wrap:wrap;}
+.tl-node{text-align:center;padding:8px 16px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text2);min-width:100px;}
+.tl-node strong{display:block;font-size:14px;color:var(--text);font-family:'Rubik',sans-serif;}
+.tl-arrow{font-size:20px;color:var(--accent);padding:0 4px;}
+
+@media(max-width:600px){.page{padding:24px 16px 60px;}.card,.q-box,.step{padding:22px 18px;}.timeline{flex-direction:column;}.tl-arrow{transform:rotate(90deg);}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">📐 רכוש קבוע – מודל העלות – מכירת ר"ק</div>
+  <h1>שאלה – <span>מכירת נכס עם שינוי אומדן</span></h1>
+  <p>סכום ספרות השנים (SYD) + שינוי אומדן חשבונאי + רווח/הפסד ממכירה</p>
+</div>
+
+<div class="page">
+
+  <!-- ══════ QUESTION ══════ -->
+  <div class="q-box">
+    <h2>📝 גוף השאלה</h2>
+    <p>חברת <strong>"מתכת אום" בע"מ</strong> רכשה מכונת CNC ביום <strong>1.1.2020</strong> שעלותה <strong>150,000 ש"ח</strong>. תקופת החיים של המכונה 8 שנים, ערך הגרט <strong>6,000 ש"ח</strong> ושיטת הפחת <strong>"סכום ספרות השנים"</strong>.</p>
+    <p>ביום <strong>1.1.2022</strong> התקבלה הערכת שמאי, לפיה נקבע שיתרת חיי המכונה <strong>4 שנים</strong> וערך הגרט <strong>2,000 ש"ח</strong> (שיטת הפחת נשארה ללא שינוי).</p>
+    <p>ביום <strong>31.12.2024</strong> נמכרה המכונה תמורת <strong>25,000 ש"ח</strong>.</p>
+    <div class="q-required">נדרש: מה סכום הרווח או ההפסד ממכירת המכונה?</div>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="card">
+    <h2>סמנו תשובה:</h2>
+    <div class="options" id="optBox">
+      <div class="opt" onclick="sel(0)" id="opt0"><span class="letter">א</span><span>הפסד – <span class="num">5,000</span> ש"ח</span></div>
+      <div class="opt" onclick="sel(1)" id="opt1"><span class="letter">ב</span><span>רווח – <span class="num">1,000</span> ש"ח</span></div>
+      <div class="opt" onclick="sel(2)" id="opt2"><span class="letter">ג</span><span>רווח – <span class="num">14,200</span> ש"ח</span></div>
+      <div class="opt" onclick="sel(3)" id="opt3"><span class="letter">ד</span><span>הפסד – <span class="num">3,400</span> ש"ח</span></div>
+      <div class="opt" onclick="sel(4)" id="opt4"><span class="letter">ה</span><span>תשובות א עד ד שגויות.</span></div>
+    </div>
+    <div class="btn-row"><button class="check-btn" id="checkBtn" onclick="check()">בדוק תשובה ⟵</button></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <div class="toggle-btn" onclick="toggleSol()">📖 הצג פתרון מפורט</div>
+
+  <!-- ══════ SOLUTION ══════ -->
+  <div class="solution-wrapper" id="solBox">
+    <div class="sep"></div>
+    <div class="card">
+      <h2>🔍 פתרון מפורט ומוסבר</h2>
+      <p style="text-align:center;color:var(--text3);">התשובה הנכונה: <strong style="color:var(--accent);">ג. רווח 14,200 ש"ח</strong></p>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="card">
+      <h2>ציר זמן – אירועים מרכזיים</h2>
+      <div class="timeline">
+        <div class="tl-node"><strong>1.1.2020</strong>רכישה<br>150,000</div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node" style="border-color:var(--gold);"><strong>1.1.2022</strong>שינוי אומדן<br>חיים: 4, גרט: 2,000</div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node" style="border-color:var(--coral);"><strong>31.12.2024</strong>מכירה<br>תמורת 25,000</div>
+      </div>
+    </div>
+
+    <!-- STEP 1: PHASE 1 DEPRECIATION -->
+    <div class="step" style="border-top:3px solid var(--accent);">
+      <div class="step-header"><div class="step-num">1</div><div class="step-title">שלב א – פחת בתקופה הראשונה (2020–2021)</div></div>
+
+      <h3>נתוני פתיחה</h3>
+      <div class="tw"><table>
+        <thead><tr><th>פרט</th><th>ערך</th></tr></thead>
+        <tbody>
+          <tr><td>עלות</td><td class="nc">150,000</td></tr>
+          <tr><td>ערך גרט</td><td class="nc">6,000</td></tr>
+          <tr><td>בסיס בר-פחת</td><td class="nc" style="font-weight:700;">144,000</td></tr>
+          <tr><td>אורך חיים</td><td class="nc">8 שנים</td></tr>
+          <tr><td>סכום ספרות</td><td class="nc">8+7+6+5+4+3+2+1 = 36</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>פחת SYD – שנים 2020–2021</h3>
+      <div class="tw"><table>
+        <thead><tr><th>שנה</th><th>מקדם</th><th>חישוב</th><th>פחת (ש"ח)</th></tr></thead>
+        <tbody>
+          <tr><td>2020 (שנה 1)</td><td class="nc">8/36</td><td class="nc">144,000 × 8/36</td><td class="nc">32,000</td></tr>
+          <tr><td>2021 (שנה 2)</td><td class="nc">7/36</td><td class="nc">144,000 × 7/36</td><td class="nc">28,000</td></tr>
+          <tr class="total-row"><td colspan="3">פחת נצבר ליום 31.12.2021</td><td class="nc">60,000</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>ערך בספרים ליום 1.1.2022 (רגע לפני שינוי האומדן)</h3>
+      <div class="f">150,000 − 60,000 = 90,000<span class="l">עלות − פחת נצבר = עלות מופחתת</span></div>
+    </div>
+
+    <!-- STEP 2: CHANGE IN ESTIMATE -->
+    <div class="step" style="border-top:3px solid var(--gold);">
+      <div class="step-header"><div class="step-num" style="background:var(--gold);">2</div><div class="step-title">שלב ב – שינוי אומדן חשבונאי (1.1.2022)</div></div>
+
+      <div class="kp"><div class="kl">כלל מרכזי – IAS 8</div><p>שינוי אומדן חשבונאי מיושם <strong>מכאן ולהבא (פרוספקטיבית)</strong> – לא מתקנים את העבר. הפחת מחושב מחדש על בסיס <strong>הערך בספרים</strong> במועד השינוי.</p></div>
+
+      <h3>נתונים חדשים מ-1.1.2022</h3>
+      <div class="tw"><table>
+        <thead><tr><th>פרט</th><th>ערך</th></tr></thead>
+        <tbody>
+          <tr><td>עלות מופחתת (ערך בספרים)</td><td class="nc">90,000</td></tr>
+          <tr><td>ערך גרט חדש</td><td class="nc">2,000</td></tr>
+          <tr><td>בסיס בר-פחת חדש</td><td class="nc" style="font-weight:700;">88,000</td></tr>
+          <tr><td>יתרת חיים חדשה</td><td class="nc">4 שנים</td></tr>
+          <tr><td>סכום ספרות חדש</td><td class="nc">4+3+2+1 = 10</td></tr>
+          <tr><td>שיטת פחת</td><td class="nc">SYD – ללא שינוי</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="f">90,000 − 2,000 = 88,000<span class="l">ערך בספרים − ערך גרט חדש = בסיס בר-פחת חדש</span></div>
+
+      <div class="warn"><div class="kl">⚠️ טעות נפוצה</div><p>אין לחשב את הבסיס החדש מתוך העלות המקורית (150,000). הבסיס הוא <strong>הערך בספרים</strong> (90,000) פחות ערך הגרט החדש.</p></div>
+    </div>
+
+    <!-- STEP 3: PHASE 2 DEPRECIATION -->
+    <div class="step" style="border-top:3px solid var(--blue);">
+      <div class="step-header"><div class="step-num" style="background:var(--blue);">3</div><div class="step-title">שלב ג – פחת בתקופה השנייה (2022–2024)</div></div>
+
+      <div class="tw"><table>
+        <thead><tr><th>שנה</th><th>מקדם</th><th>חישוב</th><th>פחת (ש"ח)</th></tr></thead>
+        <tbody>
+          <tr><td>2022 (שנה 1 חדשה)</td><td class="nc">4/10</td><td class="nc">88,000 × 4/10</td><td class="nc">35,200</td></tr>
+          <tr><td>2023 (שנה 2 חדשה)</td><td class="nc">3/10</td><td class="nc">88,000 × 3/10</td><td class="nc">26,400</td></tr>
+          <tr><td>2024 (שנה 3 חדשה)</td><td class="nc">2/10</td><td class="nc">88,000 × 2/10</td><td class="nc">17,600</td></tr>
+          <tr class="total-row"><td colspan="3">פחת נצבר בתקופה השנייה</td><td class="nc">79,200</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="tip"><div class="kl">💡 שימו לב</div><p>המכונה נמכרה ב-<strong>31.12.2024</strong> – כלומר סוף השנה. לכן מוכרים פחת מלא לשנת 2024 <strong>לפני</strong> חישוב הרווח/הפסד.</p></div>
+    </div>
+
+    <!-- STEP 4: CARRYING AT SALE -->
+    <div class="step" style="border-top:3px solid var(--coral);">
+      <div class="step-header"><div class="step-num" style="background:var(--coral);">4</div><div class="step-title">שלב ד – ערך בספרים במועד המכירה</div></div>
+
+      <h3>פחת נצבר כולל</h3>
+      <div class="f">60,000 + 79,200 = 139,200<span class="l">פחת תקופה 1 + פחת תקופה 2 = פחת נצבר כולל</span></div>
+
+      <h3>עלות מופחתת ליום 31.12.2024</h3>
+      <div class="f">150,000 − 139,200 = 10,800<span class="l">עלות − פחת נצבר כולל = עלות מופחתת (ערך בספרים)</span></div>
+
+      <div class="tw"><table>
+        <thead><tr><th>רכיב</th><th>סכום (ש"ח)</th></tr></thead>
+        <tbody>
+          <tr><td>עלות מקורית</td><td class="nc">150,000</td></tr>
+          <tr><td>פחת נצבר – תקופה 1 (2020–2021)</td><td class="nc" style="color:var(--coral);">(60,000)</td></tr>
+          <tr><td>פחת נצבר – תקופה 2 (2022–2024)</td><td class="nc" style="color:var(--coral);">(79,200)</td></tr>
+          <tr class="total-row"><td>ערך בספרים ליום המכירה</td><td class="nc">10,800</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- STEP 5: PROFIT/LOSS -->
+    <div class="step" style="border-top:3px solid var(--accent);">
+      <div class="step-header"><div class="step-num">5</div><div class="step-title">שלב ה – חישוב רווח / הפסד ממכירה</div></div>
+
+      <div class="f">25,000 − 10,800 = 14,200<span class="l">תמורת מכירה − ערך בספרים = רווח ממכירה</span></div>
+
+      <p style="text-align:center;">תמורת המכירה (25,000) <strong>גבוהה</strong> מהערך בספרים (10,800) → <strong>רווח</strong>.</p>
+
+      <div class="final">
+        <div class="big">רווח: 14,200 ₪</div>
+        <div class="fl">התשובה הנכונה: ג</div>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- ERROR ANALYSIS -->
+    <div class="step">
+      <div class="step-header"><div class="step-num" style="background:var(--coral);">!</div><div class="step-title">ניתוח המסיחים</div></div>
+
+      <div class="tw"><table>
+        <thead><tr><th>תשובה</th><th>סכום</th><th>מהי הטעות?</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">א. הפסד 5,000</td><td class="nc">−5,000</td>
+            <td>התעלמות משינוי האומדן – המשך SYD מקורי (6/36, 5/36, 4/36 לשנים 2022–2024) → נצבר = 120,000 → בספרים = 30,000 → הפסד 5,000</td></tr>
+          <tr><td style="font-weight:600;">ב. רווח 1,000</td><td class="nc">+1,000</td>
+            <td>שינוי שיטה לקו ישר במקום להמשיך SYD → 88,000 ÷ 4 = 22,000 × 3 = 66,000 → בספרים = 24,000 → רווח 1,000</td></tr>
+          <tr class="total-row"><td style="font-weight:600;">ג. רווח 14,200 ✓</td><td class="nc">+14,200</td><td>תשובה נכונה</td></tr>
+          <tr><td style="font-weight:600;">ד. הפסד 3,400</td><td class="nc">−3,400</td>
+            <td>אי-הכרת פחת 2024 (שנת המכירה) → נצבר = 121,600 → בספרים = 28,400 → הפסד 3,400</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- KEY RULES -->
+    <div class="card" style="background:var(--gold-light);border-color:var(--gold-border);">
+      <h2 style="color:var(--gold);">💡 סיכום כללים – שינוי אומדן ומכירה</h2>
+
+      <div class="kp"><div class="kl">שינוי אומדן</div><p>מיושם <strong>פרוספקטיבית</strong> (מכאן ולהבא). לוקחים את הערך בספרים במועד השינוי כנקודת פתיחה חדשה – לא מתקנים שנים קודמות.</p></div>
+
+      <div class="kp"><div class="kl">בסיס פחת חדש</div><p><strong>ערך בספרים − ערך גרט חדש</strong>. לא עלות מקורית − גרט חדש!</p></div>
+
+      <div class="kp"><div class="kl">פחת בשנת מכירה</div><p>אם המכירה ב-31.12 (סוף שנה) – מכירים פחת <strong>מלא</strong> לאותה שנה לפני חישוב הרווח/הפסד. אם המכירה באמצע שנה – פחת יחסי.</p></div>
+
+      <div class="kp"><div class="kl">רווח/הפסד ממכירה</div><p><strong>תמורת מכירה − ערך בספרים</strong>. חיובי = רווח, שלילי = הפסד.</p></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+let selected=-1,done=false;const correct=2;
+function sel(i){if(done)return;selected=i;document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));document.getElementById('opt'+i).classList.add('selected');}
+function check(){if(selected===-1||done)return;done=true;document.getElementById('checkBtn').disabled=true;document.getElementById('opt'+correct).classList.add('correct');const fb=document.getElementById('feedback');if(selected===correct){fb.className='feedback show correct-fb';fb.innerHTML='✅ <strong>נכון!</strong> רווח של 14,200 ש"ח. לחצו "הצג פתרון" לראות הסבר מלא.';}else{document.getElementById('opt'+selected).classList.add('wrong');fb.className='feedback show wrong-fb';fb.innerHTML='❌ <strong>לא נכון.</strong> התשובה הנכונה היא ג (רווח 14,200 ש"ח). לחצו "הצג פתרון" להבין מדוע.';}}
+function toggleSol(){const b=document.getElementById('solBox'),t=document.querySelector('.toggle-btn');if(b.classList.contains('show')){b.classList.remove('show');t.textContent='📖 הצג פתרון מפורט';}else{b.classList.add('show');t.textContent='📕 הסתר פתרון';b.scrollIntoView({behavior:'smooth',block:'start'});}}
+</script>
+</body>
+</html>
