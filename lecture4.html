@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שאלה – רכוש קבוע – מודל העלות</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F8F9FC; --card: #FFFFFF;
+  --accent: #1A6B5C; --accent-light: #E6F4F0; --accent-border: #A8D5CA;
+  --gold: #A67C00; --gold-light: #FFF8E1; --gold-border: #E0C97A;
+  --coral: #B93A2E; --coral-light: #FDF0EE;
+  --blue: #2C5F8A; --blue-light: #EBF3FA; --blue-border: #A3C4E0;
+  --text: #1D2939; --text2: #3E5060; --text3: #7C8EA0;
+  --border: #D4DAE3;
+  --shadow: 0 2px 10px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 18px rgba(0,0,0,0.07);
+  --radius: 14px; --radius-sm: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); line-height:2; font-size:17px; }
+.page { max-width:820px; margin:0 auto; padding:40px 28px 80px; }
+
+/* Header */
+.header {
+  text-align:center; padding:48px 24px 36px;
+  background:linear-gradient(170deg,#fff 0%,#EDF2F7 60%,#E0ECF5 100%);
+  border-bottom:1px solid var(--border); margin-bottom:36px;
+}
+.header-badge {
+  display:inline-block; background:var(--accent-light); color:var(--accent);
+  font-size:13.5px; font-weight:600; padding:6px 18px; border-radius:50px;
+  border:1px solid var(--accent-border); margin-bottom:14px;
+}
+.header h1 { font-family:'Rubik',sans-serif; font-size:26px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.header h1 span { color:var(--accent); }
+.header p { font-size:16px; color:var(--text3); }
+
+/* Card */
+.card {
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:32px 34px; margin-bottom:22px; box-shadow:var(--shadow);
+}
+.card:hover { box-shadow:var(--shadow-md); }
+.card h2 { font-family:'Rubik',sans-serif; font-size:20px; font-weight:700; color:var(--text); text-align:center; margin-bottom:18px; }
+.card h3 { font-family:'Rubik',sans-serif; font-size:18px; font-weight:600; color:var(--accent); text-align:center; margin:24px 0 14px; }
+.card p { font-size:17px; color:var(--text2); line-height:2.05; }
+
+/* Question */
+.q-box {
+  background:var(--blue-light); border:1px solid var(--blue-border); border-radius:var(--radius);
+  padding:28px 30px; margin-bottom:22px; box-shadow:var(--shadow);
+}
+.q-box h2 { font-family:'Rubik',sans-serif; font-size:19px; font-weight:700; color:var(--blue); text-align:center; margin-bottom:10px; }
+.q-box p { font-size:16.5px; color:var(--text); line-height:2.05; }
+.q-required { text-align:center; font-size:18px; font-weight:700; color:var(--blue); margin-top:16px; }
+.q-sub { text-align:center; font-size:14.5px; color:var(--text3); }
+
+/* Options */
+.options { margin-top:22px; }
+.opt {
+  display:flex; align-items:center; gap:14px; padding:14px 20px; margin-bottom:10px;
+  background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-sm);
+  cursor:pointer; transition:all 0.2s; font-size:17px; color:var(--text2);
+}
+.opt:hover { background:#F0F4F8; border-color:var(--text3); }
+.opt .letter {
+  width:32px; height:32px; background:var(--bg); border:2px solid var(--border); border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Rubik',sans-serif; font-size:15px; font-weight:600; color:var(--text3); flex-shrink:0;
+}
+.opt .num { font-family:'Rubik',sans-serif; font-weight:600; }
+.opt.selected { background:var(--accent-light); border-color:var(--accent); color:var(--text); }
+.opt.selected .letter { background:var(--accent); border-color:var(--accent); color:#fff; }
+.opt.correct { background:var(--accent-light); border-color:var(--accent); }
+.opt.correct .letter { background:var(--accent); border-color:var(--accent); color:#fff; }
+.opt.wrong { background:var(--coral-light); border-color:var(--coral); }
+.opt.wrong .letter { background:var(--coral); border-color:var(--coral); color:#fff; }
+
+/* Buttons */
+.btn-row { text-align:center; margin:20px 0; }
+.check-btn {
+  background:var(--accent); color:#fff; font-family:'Heebo',sans-serif; font-size:16px; font-weight:700;
+  padding:13px 36px; border:none; border-radius:10px; cursor:pointer; transition:all 0.2s;
+}
+.check-btn:hover { box-shadow:0 4px 16px rgba(26,107,92,0.25); transform:translateY(-1px); }
+.check-btn:disabled { background:var(--bg); color:var(--text3); cursor:default; box-shadow:none; transform:none; border:1px solid var(--border); }
+.toggle-btn {
+  display:block; margin:0 auto; background:var(--card); color:var(--accent);
+  font-family:'Heebo',sans-serif; font-size:16px; font-weight:600;
+  padding:13px 32px; border:2px solid var(--accent-border); border-radius:10px; cursor:pointer;
+}
+.toggle-btn:hover { background:var(--accent-light); border-color:var(--accent); }
+
+/* Feedback */
+.feedback { display:none; margin-top:16px; padding:16px 22px; border-radius:var(--radius-sm); font-size:16px; line-height:1.9; }
+.feedback.show { display:block; }
+.feedback.correct-fb { background:var(--accent-light); color:var(--accent); border-right:4px solid var(--accent); }
+.feedback.wrong-fb { background:var(--coral-light); color:var(--coral); border-right:4px solid var(--coral); }
+
+/* Solution */
+.solution-wrapper { display:none; }
+.solution-wrapper.show { display:block; animation:fadeUp 0.4s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+/* Steps */
+.step {
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:28px 30px; margin-bottom:18px; box-shadow:var(--shadow);
+}
+.step-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; justify-content:center; }
+.step-num {
+  width:36px; height:36px; background:var(--accent); color:#fff; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Rubik',sans-serif; font-size:16px; font-weight:700; flex-shrink:0;
+}
+.step-title { font-family:'Rubik',sans-serif; font-size:18px; font-weight:600; color:var(--text); }
+
+/* Formula - ALWAYS LTR */
+.formula {
+  background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:18px 24px; margin:14px 0; text-align:center;
+  font-family:'Rubik',sans-serif; font-size:18px; font-weight:600; color:var(--accent);
+  direction:ltr; unicode-bidi:bidi-override;
+}
+.formula .label {
+  display:block; font-size:14px; font-weight:400; color:var(--text3); margin-top:6px;
+  direction:rtl; unicode-bidi:bidi-override;
+}
+
+/* Callout boxes */
+.key-point {
+  background:var(--accent-light); border-right:4px solid var(--accent);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:16px 22px; margin:16px 0;
+}
+.key-point .kp-label { font-size:12.5px; font-weight:700; color:var(--accent); letter-spacing:1px; margin-bottom:4px; }
+.key-point p { font-size:15.5px; color:var(--text); line-height:1.85; }
+
+.tip-box {
+  background:var(--gold-light); border-right:4px solid var(--gold);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:16px 22px; margin:16px 0;
+}
+.tip-box .kp-label { font-size:12.5px; font-weight:700; color:var(--gold); letter-spacing:1px; margin-bottom:4px; }
+.tip-box p { font-size:15.5px; color:var(--text); line-height:1.85; }
+
+.warning-box {
+  background:var(--coral-light); border-right:4px solid var(--coral);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:16px 22px; margin:16px 0;
+}
+.warning-box .kp-label { font-size:12.5px; font-weight:700; color:var(--coral); letter-spacing:1px; margin-bottom:4px; }
+.warning-box p { font-size:15.5px; color:var(--text); line-height:1.85; }
+
+.note-box {
+  background:#F3EDF7; border-right:4px solid #7B4FA2;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:16px 22px; margin:16px 0;
+}
+.note-box .kp-label { font-size:12.5px; font-weight:700; color:#7B4FA2; letter-spacing:1px; margin-bottom:4px; }
+.note-box p { font-size:15.5px; color:var(--text); line-height:1.85; }
+
+/* Table */
+.table-wrap {
+  overflow-x:auto; margin:16px 0; border-radius:var(--radius-sm);
+  border:1px solid var(--border); box-shadow:var(--shadow);
+}
+table { width:100%; border-collapse:collapse; font-size:15.5px; }
+thead th { background:var(--bg); color:var(--accent); font-weight:600; padding:12px 16px; text-align:right; font-size:14.5px; }
+tbody td { padding:11px 16px; border-top:1px solid var(--border); color:var(--text2); }
+tbody tr:hover { background:#FAFBFD; }
+.num-cell { text-align:center; font-family:'Rubik',sans-serif; font-weight:500; direction:ltr; }
+.total-row { font-weight:700; color:var(--accent)!important; background:var(--accent-light); }
+.exclude-row { color:var(--coral)!important; font-style:italic; }
+
+/* Separator & misc */
+.sep { height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:32px 0; }
+.final-answer {
+  text-align:center; background:var(--accent-light); border:2px solid var(--accent-border);
+  border-radius:var(--radius); padding:28px 24px; margin:24px 0;
+}
+.final-answer .big-num { font-family:'Rubik',sans-serif; font-size:36px; font-weight:700; color:var(--accent); direction:ltr; }
+.final-answer .fa-label { font-size:15px; color:var(--text2); margin-top:4px; }
+
+.summary-box {
+  background:var(--gold-light); border:1px solid var(--gold-border); border-radius:var(--radius);
+  padding:24px 26px; margin:22px 0;
+}
+.summary-box h4 { font-family:'Rubik',sans-serif; font-size:17px; color:var(--gold); margin-bottom:12px; text-align:center; }
+.summary-box ul { list-style:none; padding:0; }
+.summary-box li { padding:5px 0; font-size:15px; color:var(--text2); padding-right:24px; position:relative; line-height:1.85; }
+.summary-box li::before { content:'💡'; position:absolute; right:0; top:6px; font-size:12px; }
+
+@media(max-width:600px){
+  .page{padding:24px 16px 60px;} .card,.q-box,.step{padding:22px 18px;} .header{padding:36px 16px 28px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">📐 חלק ג – רכוש קבוע – מודל העלות</div>
+  <h1>שאלה – נכס קבוע: <span>קביעת עלות וחישוב פחת</span></h1>
+  <p>שאלה אמריקאית עם פתרון מפורט ומוסבר</p>
+</div>
+
+<div class="page">
+
+  <!-- QUESTION -->
+  <div class="q-box">
+    <h2>📝 גוף השאלה</h2>
+    <p>
+      חברת <strong>"ארזי הגליל" בע"מ</strong> (להלן – החברה) רכשה ביום <strong>1.7.2024</strong> מבנה לשימוש ההנהלה תמורת
+      <strong>1,800,000 ש"ח</strong>.
+      אומדן ערך הקרקע, שעליו המבנה ליום הרכישה, הינו <strong>300,000 ש"ח</strong>.
+    </p>
+    <p>
+      החברה שילמה סכומים נוספים הקשורים לרכישת המבנה, כלהלן:
+      היטל השבחה בסך <strong>24,000 ש"ח</strong>,
+      שכר טרחת שמאי בסך <strong>6,000 ש"ח</strong>,
+      עבודות חשמל והתאמת משרדים בסך <strong>50,000 ש"ח</strong>,
+      וביטוח המבנה לשנה החל מיום 1.1.2025 בסך <strong>8,000 ש"ח</strong>.
+    </p>
+    <p>המבנה היה מוכן לשימוש ההנהלה ביום <strong>1.1.2025</strong>.</p>
+    <p>המבנה מופחת בשיטת <strong>הקו הישר</strong> על פני <strong>20 שנים</strong> (ערך גרט אפס).</p>
+    <div class="q-required">נדרש: מהי העלות המופחתת של המבנה ליום 31.12.2026 (בש"ח)?</div>
+    <div class="q-sub">(יש ללוות את התשובה המסומנת בהסבר מפורט)</div>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="card">
+    <h2>סמנו תשובה:</h2>
+    <div class="options" id="optionsBox">
+      <div class="opt" onclick="sel(0)" id="opt0"><span class="letter">א</span><span class="num">1,729,200</span></div>
+      <div class="opt" onclick="sel(1)" id="opt1"><span class="letter">ב</span><span class="num">1,692,000</span></div>
+      <div class="opt" onclick="sel(2)" id="opt2"><span class="letter">ג</span><span class="num">1,722,000</span></div>
+      <div class="opt" onclick="sel(3)" id="opt3"><span class="letter">ד</span><span class="num">1,682,500</span></div>
+      <div class="opt" onclick="sel(4)" id="opt4"><span class="letter">ה</span><span>תשובות א עד ד שגויות.</span></div>
+    </div>
+    <div class="btn-row"><button class="check-btn" id="checkBtn" onclick="check()">בדוק תשובה ⟵</button></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <!-- TOGGLE -->
+  <div class="btn-row"><button class="toggle-btn" id="toggleBtn" onclick="toggleSol()">📖 הצג פתרון מפורט</button></div>
+
+  <!-- SOLUTION -->
+  <div class="solution-wrapper" id="solBox">
+    <div class="sep"></div>
+    <div class="card">
+      <h2>🔍 פתרון מפורט ומוסבר</h2>
+      <p style="text-align:center;color:var(--text3);">התשובה הנכונה: <strong style="color:var(--accent);">ג. 1,722,000 ש"ח</strong></p>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-header"><div class="step-num">1</div><div class="step-title">הפרדת קרקע ממבנה</div></div>
+      <p>קרקע אינה מופחתת (אורך חיים בלתי מוגבל). לכן נפריד את ערך הקרקע מערך המבנה:</p>
+      <div class="formula">1,800,000 − 300,000 = 1,500,000<span class="label">מחיר רכישה כולל − ערך קרקע = ערך מבנה</span></div>
+      <div class="key-point"><div class="kp-label">עיקרון</div><p>קרקע – לעולם לא מופחתת. מבנה – מופחת. תמיד הפרידו ביניהם.</p></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-header"><div class="step-num">2</div><div class="step-title">בחינת עלויות נוספות – מה מהוון למבנה?</div></div>
+      <p>עלות נכס קבוע כוללת את מחיר הרכישה + כל העלויות המיוחסות ישירות להבאת הנכס למצב מוכנות לשימוש.</p>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>סעיף</th><th>סכום (ש"ח)</th><th>הוון?</th><th>נימוק</th></tr></thead>
+        <tbody>
+          <tr><td>היטל השבחה</td><td class="num-cell">24,000</td><td style="color:var(--accent);font-weight:600;">✓ כן</td><td>עלות ישירה – תנאי להשלמת הרכישה</td></tr>
+          <tr><td>שכר שמאי</td><td class="num-cell">6,000</td><td style="color:var(--accent);font-weight:600;">✓ כן</td><td>עלות ישירה הנדרשת לביצוע העסקה</td></tr>
+          <tr><td>עבודות חשמל והתאמה</td><td class="num-cell">50,000</td><td style="color:var(--accent);font-weight:600;">✓ כן</td><td>הבאת המבנה למצב מוכנות לשימוש</td></tr>
+          <tr class="exclude-row"><td>ביטוח מבנה (שנתי)</td><td class="num-cell">8,000</td><td style="color:var(--coral);font-weight:600;">✗ לא</td><td>הוצאה שוטפת תקופתית – לא מביאה הנכס למצב פעילות</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warning-box"><div class="kp-label">⚠️ מלכודת</div><p><strong>ביטוח שנתי</strong> הוא הוצאה תקופתית (OPEX). אינו חלק מעלות הנכס! מי שמהוון אותו בטעות – מגיע לתשובה א (1,729,200).</p></div>
+
+      <div class="note-box"><div class="kp-label">📌 הערה מתודולוגית</div><p>מבחינה מהותית, היטל השבחה מוטל בגין עליית ערך <strong>הקרקע</strong> (חוק התכנון והבנייה), וייתכן שיש מקום לייחסו דווקא לקרקע. אולם המוסכמה בקורס היא שכלל עלויות העסקה מהוונות למבנה – אלא אם נאמר במפורש אחרת.</p></div>
+
+      <p style="margin-top:16px;"><strong>סה"כ עלות מבנה להיוון:</strong></p>
+      <div class="formula">1,500,000 + 24,000 + 6,000 + 50,000 = 1,580,000<span class="label">מבנה + היטל + שמאי + חשמל</span></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-header"><div class="step-num">3</div><div class="step-title">חישוב פחת שנתי</div></div>
+      <p>שיטת הקו הישר – הפחת מחולק באופן שווה לכל שנה:</p>
+      <div class="formula">1,580,000 ÷ 20 = 79,000<span class="label">(עלות − ערך גרט) ÷ אורך חיים = פחת שנתי</span></div>
+      <div class="tip-box"><div class="kp-label">💡 הערה</div><p>ערך גרט = 0 (נתון), לכן כל העלות מופחתת. אילו היה ערך גרט חיובי – היינו מפחיתים אותו מהעלות לפני החלוקה.</p></div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-header"><div class="step-num">4</div><div class="step-title">תקופת הפחת – ממתי מפחיתים?</div></div>
+      <p>הפחתה מתחילה <strong>ממועד מוכנות לשימוש</strong> – לא ממועד הרכישה!</p>
+      <div class="key-point"><div class="kp-label">כלל מרכזי</div><p>מועד רכישה: 1.7.2024. מועד מוכנות לשימוש: <strong>1.1.2025</strong>. הפחת מתחיל מ-1.1.2025 בלבד!</p></div>
+      <p>תקופת פחת עד ליום המדידה:</p>
+      <div class="formula">1.1.2025 → 31.12.2026 = 2 שנים (24 חודשים)<span class="label">שנת 2025 מלאה + שנת 2026 מלאה</span></div>
+      <div class="warning-box"><div class="kp-label">⚠️ טעות נפוצה</div><p>הפחתה ממועד הרכישה (1.7.2024) נותנת 2.5 שנים – ומובילה לתשובה ד (1,682,500). תמיד בדקו: <strong>מוכנות לשימוש ≠ מועד רכישה!</strong></p></div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-header"><div class="step-num">5</div><div class="step-title">חישוב פחת נצבר</div></div>
+      <div class="formula">79,000 × 2 = 158,000<span class="label">פחת שנתי × מספר שנות הפחתה = פחת נצבר</span></div>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>תקופה</th><th>חודשים</th><th>פחת (ש"ח)</th></tr></thead>
+        <tbody>
+          <tr><td>2025 (שנה מלאה)</td><td class="num-cell">12</td><td class="num-cell">79,000</td></tr>
+          <tr><td>2026 (שנה מלאה)</td><td class="num-cell">12</td><td class="num-cell">79,000</td></tr>
+          <tr class="total-row"><td>סה"כ פחת נצבר</td><td class="num-cell">24</td><td class="num-cell">158,000</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step">
+      <div class="step-header"><div class="step-num">6</div><div class="step-title">חישוב העלות המופחתת ליום 31.12.2026</div></div>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>רכיב</th><th>סכום (ש"ח)</th></tr></thead>
+        <tbody>
+          <tr><td>עלות מבנה מהוונת</td><td class="num-cell">1,580,000</td></tr>
+          <tr><td>בניכוי: פחת נצבר (2 שנים)</td><td class="num-cell" style="color:var(--coral);">(158,000)</td></tr>
+          <tr><td>= יתרה מופחתת – מבנה</td><td class="num-cell" style="font-weight:700;">1,422,000</td></tr>
+          <tr><td>+ ערך קרקע (לא מופחתת)</td><td class="num-cell">300,000</td></tr>
+          <tr class="total-row"><td>= עלות מופחתת כוללת של הנכס</td><td class="num-cell">1,722,000</td></tr>
+        </tbody>
+      </table></div>
+
+      <p style="margin-top:12px;">או בנוסחה אחת:</p>
+      <div class="formula">(1,580,000 − 158,000) + 300,000 = 1,722,000<span class="label">(עלות מבנה − פחת נצבר) + קרקע = עלות מופחתת</span></div>
+
+      <div class="final-answer">
+        <div class="big-num">₪ 1,722,000</div>
+        <div class="fa-label">התשובה הנכונה: ג</div>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- ERROR ANALYSIS -->
+    <div class="step">
+      <div class="step-header"><div class="step-num" style="background:var(--coral);">!</div><div class="step-title">ניתוח המסיחים – למה שאר התשובות שגויות?</div></div>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>תשובה</th><th>סכום</th><th>מהי הטעות?</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">א. 1,729,200</td><td class="num-cell">1,729,200</td>
+            <td>היוון ביטוח שנתי בטעות → עלות מבנה = 1,588,000 → פחת שנתי = 79,400 → פחת נצבר = 158,800 → יתרה + קרקע = 1,729,200</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">ב. 1,692,000</td><td class="num-cell">1,692,000</td>
+            <td>הפחתת קרקע בטעות → בסיס = 1,880,000 → פחת שנתי = 94,000 → פחת נצבר = 188,000 → יתרה = 1,692,000</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-weight:600;">ג. 1,722,000 ✓</td><td class="num-cell">1,722,000</td>
+            <td>תשובה נכונה</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">ד. 1,682,500</td><td class="num-cell">1,682,500</td>
+            <td>פחת ממועד רכישה (1.7.2024) במקום מוכנות → 2.5 שנים → פחת נצבר = 197,500 → יתרה + קרקע = 1,682,500</td>
+          </tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- SUMMARY -->
+    <div class="summary-box">
+      <h4>💡 סיכום כללים לזכור</h4>
+      <ul>
+        <li><strong>קרקע לעולם לא מופחתת</strong> – תמיד הפרידו אותה מהמבנה</li>
+        <li><strong>הוצאות שוטפות</strong> (ביטוח, תחזוקה, ארנונה) – לא מהוונות לנכס</li>
+        <li><strong>עלויות הבאה למצב פעילות</strong> (חשמל, שיפוצים, היטלים) – כן מהוונות</li>
+        <li><strong>פחת מתחיל ממועד מוכנות לשימוש</strong> – לא ממועד הרכישה</li>
+        <li><strong>ערך גרט = 0</strong> → בסיס הפחת = מלוא העלות המהוונת</li>
+        <li><strong>עלות מופחתת = (עלות מבנה − פחת נצבר) + קרקע</strong></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let selected = -1, done = false;
+const correct = 2;
+
+function sel(i) {
+  if (done) return;
+  selected = i;
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  document.getElementById('opt' + i).classList.add('selected');
+}
+
+function check() {
+  if (selected === -1 || done) return;
+  done = true;
+  document.getElementById('checkBtn').disabled = true;
+  document.getElementById('opt' + correct).classList.add('correct');
+  const fb = document.getElementById('feedback');
+  if (selected === correct) {
+    fb.className = 'feedback show correct-fb';
+    fb.innerHTML = '✅ <strong>נכון!</strong> העלות המופחתת ליום 31.12.2026 היא 1,722,000 ש"ח. לחצו "הצג פתרון מפורט" לראות את ההסבר המלא.';
+  } else {
+    document.getElementById('opt' + selected).classList.add('wrong');
+    fb.className = 'feedback show wrong-fb';
+    fb.innerHTML = '❌ <strong>לא נכון.</strong> התשובה הנכונה היא ג (1,722,000 ש"ח). לחצו "הצג פתרון מפורט" כדי להבין מדוע.';
+  }
+}
+
+function toggleSol() {
+  const box = document.getElementById('solBox');
+  const btn = document.getElementById('toggleBtn');
+  if (box.classList.contains('show')) {
+    box.classList.remove('show');
+    btn.textContent = '📖 הצג פתרון מפורט';
+  } else {
+    box.classList.add('show');
+    btn.textContent = '📕 הסתר פתרון';
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+</script>
+</body>
+</html>
